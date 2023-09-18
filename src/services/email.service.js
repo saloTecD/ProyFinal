@@ -49,3 +49,35 @@ export const validateLink=async(link)=>{
     let validLink=await resetPassModel.findOne({userLink:link})
     return(validLink)
 }
+export const sendEmailAdminDelete=async(userEmail)=>{
+    const result=await transport.sendMail({
+        from:"Tienda En Linea <salo.tec.d@gmail.com>",
+        to:userEmail,
+        subject:"Cuenta eliminada",
+        html:`
+            <h1>Cuenta Eliminada</h1>
+            <p>Se ha generado un peticion para eliminar esta cuenta por el administrador del sitio</p>
+            <p>si crees que es un error, por favor contacta con nuestro servicio tenico</p>
+            
+        `,
+        attachments:[]
+    })
+
+    return result
+}
+export const sendEmailExpireDelete=async(userEmail)=>{
+    const result=await transport.sendMail({
+        from:"Tienda En Linea <salo.tec.d@gmail.com>",
+        bcc:userEmail,
+        subject:"Cuenta eliminada",
+        html:`
+            <h1>Cuenta Eliminada</h1>
+            <p>Esta cuenta ha sido eliminada automaticamente por inactividad</p>
+            <p>si crees que es un error, por favor contacta con nuestro servicio tenico</p>
+            
+        `,
+        attachments:[]
+    })
+
+    return result
+}

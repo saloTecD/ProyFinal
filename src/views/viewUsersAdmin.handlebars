@@ -1,0 +1,25 @@
+<div class="container my-5">
+    <div class="row">
+        <table class="table table-dark table-striped-columns">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each showUsers}}
+                <tr>
+                    <td>{{this.userEmail}}</td>
+                    <td>Actual:{{this.userRol}} <p><button type="button" class="btn btn-info urol" id={{this.userEmail}}>Usuario</button></p> <p><button type="button" class="btn btn-info prol" id={{this.userEmail}}>Premium</button></p></td>
+                    <td><p><button type="button" class="btn btn-info deleteUser" id={{this.userEmail}}>Eliminar</button></p></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="../public/js/users.js"></script>

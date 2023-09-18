@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {updateDocuments, updateRol,getUsers,deleteExpireUsers} from "../controllers/user.Controller.js"
+import {updateDocuments, updateRol,getUsers,deleteExpireUsers,deleteUser} from "../controllers/user.Controller.js"
 import {valid,adminRol, adminPremiumRol} from "../auth/rolValidator.js"
 import { uploaderDocuments } from "../utils/multer.js";
 const router=Router()
@@ -12,4 +12,5 @@ router.post("/users/:uid/documents",valid,uploaderDocuments.fields([
 ]),updateDocuments)
 router.get("/users",valid,getUsers)
 router.delete("/users",deleteExpireUsers)
+router.delete("/user/:uid",deleteUser)
 export default router

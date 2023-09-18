@@ -5,6 +5,7 @@ import userManager from "../services/dao/userManager.js"
 import passport from "../auth/passport.config.js"
 import { addLogger } from "../services/logger.service.js";
 import { generateRandomLink, sendMail, validateLink } from "../services/email.service.js";
+import userDTO from "../services/userDTO.js"
 const adminUser = config.ADMIN_USER
 const adminPass = config.ADMIN_PASS
 
@@ -171,4 +172,13 @@ export const newPass=async(req,res)=>{
             res.render("login",{msg:"Contraseña Actualizada"})
         }
     }
+ }
+ export const viewUsersAdmin=async(req,res)=>{
+    let users=await uManager.getUsersList()
+    let newResult=[]
+    for (const elem of users){
+        if(elem._id!="64a4386586d270d35fe0ca49"){
+        newResult.push(elem)}
+    }
+    return res.render("viewUsersAdmin",{showUsers:newResult})
  }

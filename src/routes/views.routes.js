@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "../auth/passport.config.js"
 import productManager from "../services/dao/productManagerDB.js"
-import {viewGetProducts,/* viewGetProductsLimit, */viewChat,viewListCartProd,viewLogin,postLogin,viewRegistro,postRegistro,viewLogout,viewPurchase,viewRestablecerContrasena,postRestablecerContrasena,viewResetPass, newPass} from "../controllers/views.controller.js"
+import {viewGetProducts,/* viewGetProductsLimit, */viewUsersAdmin,viewChat,viewListCartProd,viewLogin,postLogin,viewRegistro,postRegistro,viewLogout,viewPurchase,viewRestablecerContrasena,postRestablecerContrasena,viewResetPass, newPass} from "../controllers/views.controller.js"
 import identity from "../auth/userID.js";
 import { adminRol,userRol,valid } from "../auth/rolValidator.js";
 const pManager = new productManager()
@@ -57,6 +57,7 @@ const viewRoutes=(store)=>{
     router.post("/restablecercontrasena",postRestablecerContrasena)
     router.get("/restablecercontrasena/:link",viewResetPass)
     router.post("/newpass",newPass)
+    router.get("/users",adminRol,viewUsersAdmin)
     return router
 }
 

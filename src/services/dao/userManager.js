@@ -74,13 +74,13 @@ class UserManager {
         if (rol === "premium") {
             if (id && domicilio && cuenta) {
                 let updateRol = await userModel.updateOne({ "userEmail": userEmail }, { userRol: rol })
-                return (updateRol)
+                return ("Rol Actualizado")
             }else{
                 return("No se ha subido la documentacion requerida para ejecutar esta operacion")
             }
         }else{
             let updateRol = await userModel.updateOne({ "userEmail": userEmail }, { userRol: rol })
-            return (updateRol)
+            return ("Rol Actualizado")
         }
 
 
@@ -113,12 +113,18 @@ class UserManager {
         let currentDate=new Date().getTime()
         let result=currentDate-172800000
         //prueba  dos minutos de expiracion
-        // let result=currentDate-120000
+        //let result=currentDate-120000
         //fin prueba dos minutos de expiracion
         let findDate=new Date(result)
         console.log(findDate)
+        let usersNotify=await userModel.find({userLastConnection:{$lt:findDate}, "_id": {$ne:"64a4386586d270d35fe0ca49"}})
         let usersToDelete=await userModel.deleteMany({userLastConnection:{$lt:findDate}, "_id": {$ne:"64a4386586d270d35fe0ca49"}})
-        console.log(`Resultado: ${usersToDelete}`)
+        // console.log(`Resultado: ${usersToDelete}`)
+        return(usersNotify)
+    }
+    deleteUser=async(uid)=>{
+        let userDelete=await userModel.deleteOne({userEmail:uid})
+        return("Ususario Eliminado")
     }
 }
 
