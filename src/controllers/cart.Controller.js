@@ -66,5 +66,6 @@ export const purchaseOrder=async(req,res)=>{
      let items=process.itemError
      let deleteItems=process.itemClean
      const cleanCart=await cManager.cleanCart(deleteItems)
+     const emptyCart=await cManager.emptyCart(cid)
      res.render("purchaseOrder",{order:order,items:items, logo:logo,rol:rol})
  }

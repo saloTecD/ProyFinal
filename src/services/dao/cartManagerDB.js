@@ -243,7 +243,8 @@ class CartManager {
 
         }
         let result = await modStock(array)
-
+    
+            console.log(`Limpiando el Carrito:   ${result}`)
         return result
 
     }
