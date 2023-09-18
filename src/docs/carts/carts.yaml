@@ -1,0 +1,179 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Retorna el contenido del carrito indicado con el cid
+      tags: 
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: "ERR"
+    put:
+      summary: Agrega un listado de productos con datos enviados en el body
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/addListProductToCart"
+      responses:
+        "200":
+          description: "OK, Articulos agregados"
+        "300":
+          description: "Usuario no tiene permisos o no se ha validado"
+        "500":
+          description: "ERR"
+    delete:
+      summary: Vacia el carrito
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+      responses:
+        "200":
+          description: "OK, Articulos agregados"
+        "300":
+          description: "Usuario no tiene permisos o no se ha validado"
+        "500":
+          description: "ERR"
+  /api/carts/{cid}/products/{pid}:
+    post:
+      summary: Agrega al carrito indicado por el cid el producto indicado por el pid
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+        - name: pid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+      responses:
+        "200":
+          description: "OK, Articulo Agregado satisfactoriamente"
+        "500":
+          description: "ERR"
+    put:
+      summary: Aumenta en uno (1) la cantidad del producto indicado por el pid al carrito indicado por el cid
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+        - name: pid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+      responses:
+        "200":
+          description: "OK, Articulo Agregado satisfactoriamente"
+        "500":
+          description: "ERR"
+    delete:
+      summary: Elimina del carrito indicado por el cid el producto indicado por el pid
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+        - name: pid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+      responses:
+        "200":
+          description: "OK, Articulo Eliminado satisfactoriamente"
+        "500":
+          description: "ERR"      
+  
+    
+components:
+  schemas:
+    Cart: 
+      type: object
+      properties:
+        _id: 
+          type: object
+          description: Mongoose ObjectID
+        products:
+          type: array
+          items:
+            $ref: "#components/schemas/Productos"
+        quantity: 
+          type: integer
+
+    Productos:
+      type: object
+      properties:
+        _id:
+          type: object
+          description: Mongoose ObjectID
+        title:
+          type: string
+          description: Nombre del producto
+        descripcion:
+          type: string
+          description: Descripcion del producto
+        price:
+          type: integer
+          description: Precio del producto
+        thumbnails:
+          type: string
+          description: Imagenes del producto
+        code:
+          type: string
+          description: Codigo del producto
+        stock:
+          type: integer
+          description: Cantidad de stock del producto
+        status:
+          type: boolean
+          description: Estado (Activo/inactivo) del producto
+        category:
+          type: string
+          description: Categoria del producto
+  
+  requestBodies:
+    addListProductToCart:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              pid:
+                type: object
+                description: Mongoose ObjectID
+              quantity: 
+                type: integer
+      example:
+        products: [{pid: 64627a7fc0581ac4d1aadbf3,quantity: 100},{pid: 64627a7fc0581ac4d1aadbf4,quantity: 500}]

@@ -1,0 +1,192 @@
+paths:
+  /api/products/:
+    get:
+      summary: Retorna la lista de todos los productos
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: limit
+          schema: 
+            type: integer
+          description: Limita la cantidad de productos que se muestran, default 10
+          required: false
+        - in: query
+          name: page
+          schema: 
+            type: integer
+          description: muestra los productos del numero de la pagina solicitada, default 1
+          required: false
+        - in: query
+          name: category
+          schema: 
+            type: string
+          description: Filtra por productos que esten dentro de la categoria solicitada, default sin filtro
+          required: false
+        - in: query
+          name: status
+          schema: 
+            type: boolean
+          description: Filtra por productos activos o inactivos, default False
+          required: false
+        - in: query
+          name: sort
+          schema: 
+            type: string
+            enum: [asc,desc]
+          description: Ordena los productos en orden ascendente o descendente por precio
+          required: false
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Productos"
+        "500":
+          description: "ERR"    
+    post:
+      summary: Recibe un body para agregar un producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/addProduct"
+      responses:
+        "200":
+          description: "OK, Articulo Agregado satisfactoriamente"
+        "500":
+          description: "ERR"
+  /api/products/{pid}:
+    get:
+      summary: Retorna el detalle del producto especificado en el pid
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Productos"          
+    put:
+      summary: Permite modificar el producto especificado con datos enviados en el body, se puede actualizar 1 o mas campos
+      tags: 
+        - Products
+      parameters: 
+        - name: pid
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/updateProduct"
+      responses:
+        "200":
+          description: "OK, Articulo Modificado"
+        "300":
+          description: "Usuario no tiene permisos o no se ha validado"
+        "500":
+          description: "ERR"
+    delete:
+      summary: Borra el producto con el id especificado
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Mongoose ObjectID
+      responses:
+        "200":
+          description: "OK, producto eliminado con el id:Mongoose ObjectID"
+        "300":
+          description: "Usuario no tiene permisos o no se ha validado"
+        "500":
+          description: "ERR"
+  
+components:
+  schemas:
+    Productos:
+      type: object
+      properties:
+        _id:
+          type: object
+          description: Mongoose ObjectID
+        title:
+          type: string
+          description: Nombre del producto
+        descripcion:
+          type: string
+          description: Descripcion del producto
+        price:
+          type: integer
+          description: Precio del producto
+        thumbnails:
+          type: string
+          description: Imagenes del producto
+        code:
+          type: string
+          description: Codigo del producto
+        stock:
+          type: integer
+          description: Cantidad de stock del producto
+        status:
+          type: boolean
+          description: Estado (Activo/inactivo) del producto
+        category:
+          type: string
+          description: Categoria del producto
+      
+  
+  requestBodies:
+    addProduct:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: integer
+        status:
+          type: boolean
+        stock:
+          type: integer
+        category:
+          type: string
+    updateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        price:
+          type: integer
+        status:
+          type: boolean
+        stock:
+          type: integer
+        category:
+          type: string 
+      example:
+        price: 600
+        
