@@ -81,3 +81,20 @@ export const sendEmailExpireDelete=async(userEmail)=>{
 
     return result
 }
+export const sendEmailProductDelete=async(userEmail,prod)=>{
+    const result=await transport.sendMail({
+        from:"Tienda En Linea <salo.tec.d@gmail.com>",
+        to:userEmail,
+        subject:"Producto eliminado",
+        html:`
+            <h1>Producto Eliminado</h1>
+            <p>Se ha eliminado el siguiente producto de tu comercio</p>
+            <p>${prod}</p>
+            <p>si crees que es un error, por favor contacta con nuestro servicio tenico</p>
+            
+        `,
+        attachments:[]
+    })
+
+    return result
+}
