@@ -1,6 +1,6 @@
 <div class="container m-5 p-5" >
     <div class="row d-flex justify-content-center my-2 text-center">
-    <form action="http://localhost:8080/login" method="post" class="border col-8 form-color">
+    <form action="{{baseLink}}/login" method="post" class="border col-8 form-color">
         <div class="row d-flex justify-content-center my-2 text-center">
         <h3>Inicia Sesion</h3>
         </div>
@@ -34,19 +34,19 @@
     <div class="row my-4 d-flex justify-content-center">
         <div class="col-md-8">
             <button class="btn btn-primary" type="submit">Ingresar</button>
-            <a href="http://localhost:8080/registro"><button class="btn btn-primary" type="button">Registrarse</button></a>
+            <a href="{{baseLink}}/registro"><button class="btn btn-primary" type="button">Registrarse</button></a>
         </div>
     </div>
     <div class="row my-3 d-flex justify-content-center">
         <div class="col-md-8">
-            <a href="http://localhost:8080/api/sessions/github"><button class="btn btn-primary" type="button">Ingresar con Github</button></a>
+            <a href="{{baseLink}}/api/sessions/github"><button class="btn btn-primary" type="button">Ingresar con Github</button></a>
         </div>
     </div>
 
     </form>
     <div class="row my-3 d-flex justify-content-center">
         <div class="col">
-            <a href="http://localhost:8080/restablecercontrasena">Olvide mi contraseña</a>
+            <a href="{{baseLink}}/restablecercontrasena">Olvide mi contraseña</a>
         </div>
     </div>
 </div>

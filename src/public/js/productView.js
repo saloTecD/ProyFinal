@@ -1,7 +1,10 @@
+import baseLink from "./baselink.js"
+const link=baseLink()
+console.log(link)
 const btns=document.querySelectorAll(".bbtt")
 btns.forEach(btn=>{
     btn.addEventListener("click",event=>{
-        fetch(`http://localhost:8080/api/carts/64aff08e4f64690b6ebba41f/products/${event.target.id}`,{
+        fetch(`${link}/api/carts/usercart/products/${event.target.id}`,{
             method:"POST",
             headers:{
                 "Accept":"application/json",

@@ -1,6 +1,8 @@
 import cartManager from "../services/dao/cartManagerDB.js"
 import productManager from "../services/dao/productManagerDB.js"
+import config from "../utils/config.js"
 
+const baseLink=config.RAILWAY_LINK
 const cManager = new cartManager()
 const pManager = new productManager()
 
@@ -67,5 +69,5 @@ export const purchaseOrder=async(req,res)=>{
      let deleteItems=process.itemClean
      const cleanCart=await cManager.cleanCart(deleteItems)
      const emptyCart=await cManager.emptyCart(cid)
-     res.render("purchaseOrder",{order:order,items:items, logo:logo,rol:rol})
+     res.render("purchaseOrder",{order:order,items:items, logo:logo,rol:rol,baseLink:baseLink})
  }

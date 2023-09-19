@@ -1,3 +1,5 @@
+import config from "../../utils/config.js";
+
 const ws = io('ws://localhost:8081');
     let btnDel = document.getElementById("delBtn")
     let btnAdd = document.getElementById("aggProductoBtn")

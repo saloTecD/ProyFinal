@@ -30,7 +30,8 @@ const config={
     ADMIN_USER:process.env.ADMIN_USER,
     ADMIN_PASS:process.env.ADMIN_PASS,
     GMAIL_PASS:process.env.GMAIL_PASS,
-    GMAIL_USER:process.env.GMAIL_USER
+    GMAIL_USER:process.env.GMAIL_USER,
+    RAILWAY_LINK:process.env.RAILWAY_LINK
 
 }
 

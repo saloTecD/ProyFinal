@@ -8,6 +8,7 @@ import { generateRandomLink, sendMail, validateLink } from "../services/email.se
 import userDTO from "../services/userDTO.js"
 const adminUser = config.ADMIN_USER
 const adminPass = config.ADMIN_PASS
+const baseLink=config.RAILWAY_LINK
 
 const pManager = new productManager()
 const cManager = new cartManager()
@@ -18,41 +19,6 @@ export const viewGetProducts = async (req, res) => {
     productos = await pManager.getProducts()
     return res.render("realTimeProducts", { showProducts: productos })
 }
-
-/* export const viewGetProductsLimit =  async (err, data) => {
-
-        if (data !== null && (req.session.userValidated || req.sessionStore.userValidated)) {
-            let limit = parseInt(req.query.limit) || 10
-            let page = parseInt(req.query.page) || 1
-            let category = (req.query.category) || false
-            let status = (req.query.status) || false
-            let sort = (req.query.sort) == "asc" ? 1 : (req.query.sort) == "desc" ? -1 : false
-            let filter = { limit: limit, page: page, category: category, status: status, sort: sort }
-            let regex = new RegExp(/page=[0-9]+$/)
-            let newNextLink
-            const process = await pManager.getProductsLimit(filter)
-            let prevLink = process.hasPrevPage == false ? null : process.page - 1
-            let nextLink = process.hasNextPage == false ? null : process.page + 1
-            let newPrevUrl = prevLink == null ? null : "localhost:8080" + req.url.replace(/page=[0-9]+$/, `page=${prevLink}`)
-            let logo = req.query.logo
-            let rol = req.query.rol
-            console.log(`***************${JSON.stringify(req.session)}`)
-            if (regex.test(req.url)) {
-                newNextLink = nextLink == null ? null : "localhost:8080" + req.url.replace(/page=[0-9]+$/, `page=${nextLink}`)
-            } else {
-                newNextLink = nextLink == null ? null : "localhost:8080" + req.url + "&page=2"
-            }
-
-            process.prevLink = newPrevUrl
-            process.nextLink = newNextLink
-
-
-            res.render("products", { showProducts: process, logo: logo, rol: rol })
-        } else {
-             res.render("login")
-        }
-    }
- */
 
 export const viewChat = async (req, res) => {
     res.render("chat", {})
@@ -65,14 +31,14 @@ export const viewListCartProd = async (req, res) => {
     let rol = req.session.rol
     products = await cManager.listCartProducts(cid)
 
-    res.render("cart", { showProducts: products, logo:logo,rol:rol })
+    res.render("cart", { showProducts: products, logo:logo,rol:rol,baseLink:baseLink })
 }
 
 export const viewLogin = async (req, res) => {
     let msg = req.query.msg
     let msg2 = req.session.messages === undefined ? null : req.session.messages[0]
     delete req.session.messages
-    res.render("login", { msg: msg, msg2: msg2 })
+    res.render("login", { msg: msg, msg2: msg2,baseLink:baseLink })
 }
 
 export const postLogin = async (req, res) => {
@@ -80,19 +46,19 @@ export const postLogin = async (req, res) => {
     if (userEmail === adminUser && userPassword === adminPass) {
         req.session.userValidated = req.sessionStore.userValidated = true
         req.session.errorMessage = req.sessionStore.errorMessage = ""
-        res.redirect(`http://localhost:8080`)
+        res.redirect(`${baseLink}`)
     } else {
         const user = await uManager.validateUser(userEmail, userPassword)
         req.session.userValidated = req.sessionStore.userValidated = true
         req.session.errorMessage = req.sessionStore.errorMessage = ""
         const userUpdate=await uManager.updateLastConnection(userEmail)
-        res.redirect(`http://localhost:8080`)
+        res.redirect(`${baseLink}`)
     }
 }
 
 export const viewRegistro = async (req, res) => {
     let msg = req.session.messages === undefined ? null : req.session.messages[0]
-    res.render("register", { msg: msg })
+    res.render("register", { msg: msg ,baseLink:baseLink})
 }
 
 export const postRegistro = async (req, res) => {
@@ -103,7 +69,7 @@ export const postRegistro = async (req, res) => {
     if (!user) {
         res.render("register", { msg: "El email ingresado ya se encuentra registrado" })
     } else {
-        res.redirect("http://localhost:8080/login?msg=Usuario%20Creado%20Con%20Exito")
+        res.redirect(`${baseLink}/login?msg=Usuario%20Creado%20Con%20Exito`)
     }
 }
 
@@ -120,7 +86,7 @@ export const viewLogout = async (req, res) => {
     })
     req.logger.warn(`${new Date().toLocaleDateString()}: Usuario cerro Sesion - ${req.url}`)
     const userUpdate=await uManager.updateLastConnection(userLogOut)
-    res.redirect("http://localhost:8080")
+    res.redirect(`${baseLink}`)
 }
 
 export const viewPurchase=async(req,res)=>{
@@ -130,11 +96,11 @@ export const viewPurchase=async(req,res)=>{
     let products = []
     products = await cManager.listPurchase(cid)
     console.log(`Resumen der compra:           ${JSON.stringify(products)}`)
-    res.render("purchase", { showProducts: products.prod, logo:logo,rol:rol,total:products.total })
+    res.render("purchase", { showProducts: products.prod, logo:logo,rol:rol,total:products.total,baseLink:baseLink })
 }
 
 export const viewRestablecerContrasena=async(req,res)=>{
-    res.render("restcontrasena")
+    res.render("restcontrasena",{baseLink:baseLink})
 }
 export const postRestablecerContrasena=async(req,res)=>{
     const userEmail=req.body.userEmail
@@ -153,7 +119,7 @@ export const viewResetPass=async(req,res)=>{
         res.render("restcontrasena",{msg:"el link al que intentas acceder no existe o expiro, genera uno nuevo"})
     }
     else{
-        res.render("newpass",{msg:link})
+        res.render("newpass",{msg:link,baseLink:baseLink})
     }
     
 }

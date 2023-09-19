@@ -4,6 +4,8 @@ import productManager from "../services/dao/productManagerDB.js"
 import {viewGetProducts,/* viewGetProductsLimit, */viewUsersAdmin,viewChat,viewListCartProd,viewLogin,postLogin,viewRegistro,postRegistro,viewLogout,viewPurchase,viewRestablecerContrasena,postRestablecerContrasena,viewResetPass, newPass} from "../controllers/views.controller.js"
 import identity from "../auth/userID.js";
 import { adminRol,userRol,valid } from "../auth/rolValidator.js";
+import config from "../utils/config.js";
+const baseLink=config.RAILWAY_LINK
 const pManager = new productManager()
 const viewRoutes=(store)=>{
     const router=Router()
@@ -24,20 +26,20 @@ const viewRoutes=(store)=>{
                 const process = await pManager.getProductsLimit(filter)
                 let prevLink = process.hasPrevPage == false ? null : process.page - 1
                 let nextLink = process.hasNextPage == false ? null : process.page + 1
-                let newPrevUrl = prevLink == null ? null : "localhost:8080" + req.url.replace(/page=[0-9]+$/, `page=${prevLink}`)
+                let newPrevUrl = prevLink == null ? null : baseLink + req.url.replace(/page=[0-9]+$/, `page=${prevLink}`)
                 let logo = req.session.usuario
                 let rol = req.session.rol
                 if (regex.test(req.url)) {
-                    newNextLink = nextLink == null ? null : "localhost:8080" + req.url.replace(/page=[0-9]+$/, `page=${nextLink}`)
+                    newNextLink = nextLink == null ? null : baseLink + req.url.replace(/page=[0-9]+$/, `page=${nextLink}`)
                 } else {
-                    newNextLink = nextLink == null ? null : "localhost:8080" + req.url + "?page=2"
+                    newNextLink = nextLink == null ? null : `${baseLink}` + req.url + "?page=2"
                 }
 
                 process.prevLink = newPrevUrl
                 process.nextLink = newNextLink
 
                 
-                res.render("products", { showProducts: process, logo: logo, rol: rol })
+                res.render("products", { showProducts: process, logo: logo, rol: rol,baseLink:baseLink })
             } else {
                 res.render("login")
             }

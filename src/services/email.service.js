@@ -3,6 +3,7 @@ import nodemailer from "nodemailer"
 import randomGenerator from "../utils/random.js"
 import resetPassModel from "../models/resetPass.model.js"
 
+const baseLink=config.RAILWAY_LINK
 const GMAIL_USER=config.GMAIL_USER
 const GMAIL_PASS=config.GMAIL_PASS
 
@@ -33,7 +34,7 @@ export const sendMail=async (userEmail,userLink)=>{
 }
 export const generateRandomLink=async(userEmail)=>{
     let randomLink=randomGenerator()
-    let link=`http://localhost:8080/restablecercontrasena/${randomLink}`
+    let link=`${baseLink}/restablecercontrasena/${randomLink}`
     let tempLink={
         userEmail:userEmail,
         userLink:randomLink,

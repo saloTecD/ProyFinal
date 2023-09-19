@@ -167,7 +167,7 @@ class CartManager {
             return result
 
         } catch (e) {
-            return `Formato de codigo errone ${e}`
+            return `Formato de codigo erroneo ${e}`
         }
     }
 

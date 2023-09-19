@@ -96,8 +96,7 @@ export const deleteProducts = async (req, res) => {
         let product = await pManager.getProductById(id)
         if (session.rol == "admin" || session.usuario == product.owner) {
             if(product.owner!="admin"){
-                console.log("Entre al mail de botrrar producto")
-                console.log(product.owner)
+                
                 let mailResult=await sendEmailProductDelete(product.owner,product)
             }
             res.status(200).send(await pManager.deleteProduct(id))
