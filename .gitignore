@@ -2,5 +2,4 @@ node_modules
 uploads
 utils/logs
 !.gitkeep
-/src/*.dev
-/src/*.prod
+.env*
