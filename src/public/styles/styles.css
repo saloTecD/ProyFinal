@@ -5,3 +5,8 @@
 #comentario{
     color: red;
 }
+
+.cartbtn{
+    font-size: 12px;
+    padding-bottom:.25rem;
+}

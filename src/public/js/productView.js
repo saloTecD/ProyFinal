@@ -24,3 +24,16 @@ btns.forEach(btn=>{
     })
 })
 
+const catBtns=document.querySelectorAll(".catBtn")
+const currentUrl=window.location.host
+let newUrl
+catBtns.forEach(btn=>{
+    btn.addEventListener("click",event=>{
+        console.log(currentUrl)
+        console.log(event.target.id)
+        newUrl="http://"+currentUrl+"/?category="+event.target.id
+        console.log(newUrl)
+        window.location.replace(newUrl)
+    })
+    
+})

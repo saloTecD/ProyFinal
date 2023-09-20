@@ -27,6 +27,7 @@
                     <p class="card-text">{{this.pid.description}}</p>
                     <p class="my-4">Precio x Und: <b>{{this.pid.price}}</b></p>
                     <p class="my-3">Cant: {{this.quantity}}</p>
+                    <button type="button" class="btn btn-info cbbtt delProd btn-sm" id={{this.pid._id}}>Eliminar</button>
                 </div>
             </div>
         </div>
@@ -36,7 +37,14 @@
         <div class="col">
             <a href="{{baseLink}}/carts/usercart/purchase"><button type="button" class="btn btn-info bbtt" id="finCompra">Finalizar Compra</button></a>
         </div>
+        <div class="col">
+            <a href="{{baseLink}}"><button type="button" class="btn btn-info bbtt" id="regresar">Regresar</button></a>
+        </div>
 
     </div>
     
+    
 </div>
+
+<script src="../public/js/baselink.js" type="module"></script>
+<script src="../public/js/cartView.js" type="module"></script>

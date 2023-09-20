@@ -23,6 +23,7 @@ const viewRoutes=(store)=>{
                 let filter = { limit: limit, page: page, category: category, status: status, sort: sort }
                 let regex = new RegExp(/page=[0-9]+$/)
                 let newNextLink
+                const categorySearch=await pManager.categorySearch()
                 const process = await pManager.getProductsLimit(filter)
                 let prevLink = process.hasPrevPage == false ? null : process.page - 1
                 let nextLink = process.hasNextPage == false ? null : process.page + 1
@@ -37,9 +38,9 @@ const viewRoutes=(store)=>{
 
                 process.prevLink = newPrevUrl
                 process.nextLink = newNextLink
-
                 
-                res.render("products", { showProducts: process, logo: logo, rol: rol,baseLink:baseLink })
+                console.log(categorySearch)
+                res.render("products", { showProducts: process, logo: logo, rol: rol,baseLink:baseLink,categorySearch})
             } else {
                 res.render("login")
             }

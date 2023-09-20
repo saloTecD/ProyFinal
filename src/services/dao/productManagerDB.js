@@ -87,6 +87,16 @@ class ProductManager {
         }
     }
 
+    categorySearch = async () => {
+        try {
+            const arreglo = await productModel.distinct("category")
+            return arreglo
+        } catch (e) {
+            console.log("Update Product error de formato de codigo")
+            return "Formato de codigo erroneo"
+        }
+    }
+
 
 }
 

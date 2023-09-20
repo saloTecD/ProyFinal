@@ -70,7 +70,7 @@ server.use(cors({
     allowedHeaders: "Content-Type,Authorization"
 }))
 server.use(express.urlencoded({ extended: true }))
-const store = MongoStore.create({ mongoUrl: MONGOOSEURL, mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true }, ttl: 120 })
+const store = MongoStore.create({ mongoUrl: MONGOOSEURL, mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true }, ttl: 3600 })
 server.use(session({
     store: store,
     secret: SESSION_SECRET,

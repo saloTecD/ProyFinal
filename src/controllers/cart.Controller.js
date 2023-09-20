@@ -32,7 +32,7 @@ export const addProductToCart=async(req,res)=>{
 }
 
 export const deleteProductToCart=async(req,res)=>{
-    let cid = req.params.cid
+    let cid = req.session.pCart
     let pid = req.params.pid
     const process = await cManager.deleteCartProduct(cid, pid)
     res.status(200).send({ status: "OK", data: process })
