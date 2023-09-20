@@ -11,6 +11,6 @@ router.post("/users/:uid/documents",valid,uploaderDocuments.fields([
     {name:"cuenta",maxCount:1}
 ]),updateDocuments)
 router.get("/users",valid,getUsers)
-router.delete("/users",deleteExpireUsers)
-router.delete("/user/:uid",deleteUser)
+router.delete("/users",adminRol,deleteExpireUsers)
+router.delete("/user/:uid",adminRol,deleteUser)
 export default router

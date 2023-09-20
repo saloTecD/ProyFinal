@@ -3,3 +3,4 @@ uploads
 utils/logs
 !.gitkeep
 .env*
+baselink.js
